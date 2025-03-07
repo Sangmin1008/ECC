@@ -17,7 +17,7 @@ int main() {
     cout << "공개키: (" << key_pair.public_key.x << ", " << key_pair.public_key.y << ")" << endl;
 
     // 메시지
-    Elliptic_Curve::Point message(10, 20);  // 예제 메시지
+    Elliptic_Curve::Point message(10, 20);
     cout << "\n원본 메시지: (" << message.x << ", " << message.y << ")" << endl;
 
     // 암호화
