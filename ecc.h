@@ -17,7 +17,7 @@ public:
     Key generate_key();
     pair<Elliptic_Curve::Point, Elliptic_Curve::Point> encrypt(const Elliptic_Curve::Point& message, const Elliptic_Curve::Point& public_key);
     Elliptic_Curve::Point decrypt(const std::pair<Elliptic_Curve::Point, Elliptic_Curve::Point>& ciphertext, int64_t private_key);
-    int64_t get_order(const Elliptic_Curve::Point& G);
+    //int64_t get_order(const Elliptic_Curve::Point& G);
 };
 
 #endif //ECC_CAPSTONE_ECC_H

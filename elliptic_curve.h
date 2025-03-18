@@ -32,6 +32,9 @@ public:
     Point add(const Point& P, const Point& Q);
     Point scalar_multiply(const Point& P, int64_t k);
     bool is_on_curve(const Point& P) const;
+
+    Point map_message_to_point(const string& message);
+    string map_point_to_message(const Point& P, size_t original_length);
 };
 
 #endif //ECC_CAPSTONE_ELLIPTIC_CURVE_H

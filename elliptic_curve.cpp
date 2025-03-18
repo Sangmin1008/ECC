@@ -73,3 +73,41 @@ bool Elliptic_Curve::is_on_curve(const Point& P) const {
     if (P.is_infinity) return true;
     return mod(P.y * P.y, p) == mod(P.x * P.x * P.x + a * P.x + b, p);
 }
+
+
+Elliptic_Curve::Point Elliptic_Curve::map_message_to_point(const string& message) {
+    int64_t hash_value = 0;
+    for (char c : message) {
+        hash_value = (hash_value * 256 + (unsigned char)c) % p; // 음수 방지
+    }
+
+    // 타원곡선 점 찾기
+    for (int64_t x = hash_value; x < p; x++) {
+        int64_t rhs = (x * x * x + a * x + b) % p;
+        if (rhs < 0) rhs += p; // 모듈러스 내에서 양수 유지
+        for (int64_t y = 0; y < p; y++) {
+            int64_t lhs = (y * y) % p;
+            if (lhs == rhs) {
+                return Point(x, y);
+            }
+        }
+    }
+    cerr << "Failed to map message to point!" << endl;
+    return Point(); // 실패 시 null point 반환
+}
+
+
+string Elliptic_Curve::map_point_to_message(const Point& P, size_t original_length) {
+    int64_t x = P.x;
+    string message;
+    while (x > 0) {
+        char c = x % 256;
+        message = c + message;
+        x /= 256;
+    }
+    // 원래 메시지 길이에 맞게 패딩 조정
+    while (message.length() < original_length) {
+        message = char(0) + message;
+    }
+    return message.substr(0, original_length); // 길이 제한
+}
