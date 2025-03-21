@@ -16,13 +16,11 @@ int main() {
     cout << "Public Key: (" << key_pair.public_key.x << ", " << key_pair.public_key.y << ")" << endl;
 
     // 메시지
-    string message = "Hello, World!!!";
-    cout << message << endl;
-    Elliptic_Curve::Point M = curve.map_message_to_point(message);
-    cout << "\nMessage: (" << M.x << ", " << M.y << ")" << endl;
+    Elliptic_Curve::Point message(10, 20);
+    cout << "\nMessage: (" << message.x << ", " << message.y << ")" << endl;
 
     // 암호화
-    auto ciphertext = ecc.encrypt(M, key_pair.public_key);
+    auto ciphertext = ecc.encrypt(message, key_pair.public_key);
     cout << "P1: (" << ciphertext.first.x << ", " << ciphertext.first.y << ")" << endl;
     cout << "P2: (" << ciphertext.second.x << ", " << ciphertext.second.y << ")" << endl;
 
@@ -30,8 +28,6 @@ int main() {
     Elliptic_Curve::Point decrypted = ecc.decrypt(ciphertext, key_pair.private_key);
     cout << "result: (" << decrypted.x << ", " << decrypted.y << ")" << endl;
 
-    string result = curve.map_point_to_message(decrypted, message.size());
-    cout << "Decrypted Message: " << result << endl;
 
     return 0;
 }
